@@ -1,0 +1,15 @@
+{
+  "enable_hotlinks_screen": true,
+  "enable_download_resolution": true,
+  "enable_realm_on_download": false,
+  "enable_hotjar_production_web": true,
+  "enable_sync_subscription": true,
+  "update_cookies_player_hmg": false,
+  "enable_adSystem": false,
+  "enable_new_network": true,
+  "enable_anticipation_withdraw": true,
+  "enable_delete_account": true,
+  "enable_firebase_toggles_test": false,
+  "enable_firebase_analytics_web": true,
+  "enable_offensive_content_treatment": true
+}
