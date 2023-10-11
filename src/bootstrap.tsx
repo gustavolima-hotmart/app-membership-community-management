@@ -1,16 +1,8 @@
-import './styles.css'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { createRoot } from 'react-dom/client'
 
-import App from './app'
-import { ReactQueryProvider } from './config/reactQuery'
+import Main from './main'
 
-const Bootstrap = (): JSX.Element => {
-  return (
-    <ReactQueryProvider>
-      <App />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </ReactQueryProvider>
-  )
-}
+const container = document.getElementById('root')
+const root = createRoot(container!)
 
-export default Bootstrap
+root.render(<Main />)

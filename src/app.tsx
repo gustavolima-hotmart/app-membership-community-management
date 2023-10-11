@@ -1,12 +1,11 @@
 import { Suspense } from 'react'
 
-import { Loading } from './lib/components'
-import { H2 } from './pages'
+import { Home } from './pages'
 
 const App = (): JSX.Element => {
   return (
-    <Suspense fallback={<Loading />}>
-      <H2 />
+    <Suspense fallback={<>Loading</>}>
+      <Home />
     </Suspense>
   )
 }
