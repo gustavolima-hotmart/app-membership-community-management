@@ -7,9 +7,10 @@ export const useRequest = <Response, Select = Response>(
   fetcher: Fetcher<Response>,
   options?: UseRequestOptions<Response, Select>
 ): UseRequestResult<Select> => {
-  const response = useQuery<Response, Error, Select>(keys, fetcher, { ...options })
+  const response = useQuery<Response, Error, Select>(keys, (ctx) => fetcher(ctx), { ...options })
 
   const queryClient = useQueryClient()
+
   const invalidate = (): Promise<void> => queryClient.invalidateQueries(keys)
 
   return { invalidate, ...response }

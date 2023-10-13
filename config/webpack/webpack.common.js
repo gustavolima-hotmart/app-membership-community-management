@@ -8,11 +8,14 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESlintPlugin = require('eslint-webpack-plugin')
 const packageJSON = require('../../package.json')
+const alias = require('./utils/alias')
+const paths = require('./utils/paths')
+const { envs } = require('./utils/envs')
 
 const { ModuleFederationPlugin } = webpack.container
 
 require('dotenv').config({
-  path: path.resolve(__dirname, '..', '..', 'environments', `.env.${process.env.NODE_ENV}`)
+  path: paths.ENV[process.env.NODE_ENV]
 })
 
 const isDevelopment = process.env.NODE_ENV === 'development'
@@ -36,12 +39,7 @@ module.exports = {
     symlinks: isDevelopment,
     extensions: ['.tsx', '.ts', '.js', '.json'],
     unsafeCache: true,
-    alias: {
-      src: path.resolve(__dirname, '..', '..', 'src'),
-      public: path.resolve(__dirname, '..', '..', 'public'),
-      '@cosmos-web': path.resolve(__dirname, '..', '..', 'node_modules/@hotmart-org-ca/cosmos-web/dist'),
-      '@assets': path.resolve(__dirname, '../../src/assets')
-    }
+    alias
   },
   module: {
     rules: [
@@ -97,9 +95,15 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new webpack.EnvironmentPlugin(envs),
     new ModuleFederationPlugin({
-      remotes: {},
-      exposes: {},
+      name: 'communityManagement',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './CommunityManagementMFE': './src/main.tsx',
+        './routes': './src/router/routes/routes.ts',
+      },
       shared: {
         react: {
           singleton: true,
@@ -128,15 +132,17 @@ module.exports = {
         }
       }
     }),
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       isProd: isProduction,
       template: path.resolve(__dirname, '..', '..', 'public', 'index.html'),
       favicon: path.resolve(__dirname, '..', '..', 'public', 'favicon.ico'),
     }),
+    
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
-      'process.env.PROJECT_VERSION': JSON.stringify(packageJSON.version)
+      'process.env.PROJECT_VERSION': JSON.stringify(process.env.npm_package_version)
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser'
     }),
     new ForkTsCheckerWebpackPlugin(),
     new ESlintPlugin({

@@ -30,8 +30,10 @@
     "paths": {
       "src/*": ["src/*"],
       "public/*": ["public/*"],
-      "@cosmos-web/*": ["node_modules/@hotmart-org-ca/cosmos-web/dist/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@cosmos-web/*": ["node_modules/@hotmart-org-ca/cosmos-web/dist/react/*"],
+      "@space-lib-events/*": ["node_modules/@hotmart/space-lib-events/dist/*"],
+      "@space-lib/*": ["node_modules/@hotmart/space-lib/dist/*"],
     },                                                   /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": ["./src/core/@types", "./node_modules/@types"],

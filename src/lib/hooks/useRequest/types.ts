@@ -1,6 +1,11 @@
-import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import type {
+  QueryFunction,
+  QueryKey,
+  UseQueryOptions,
+  UseQueryResult
+} from '@tanstack/react-query'
 
-export type Fetcher<Response> = () => Response | Promise<Response>
+export type Fetcher<T = Response> = QueryFunction<T, QueryKey>
 
 export type UseRequestOptions<Response, Select = Response> = UseQueryOptions<
   Response,
